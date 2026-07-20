@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+    <!--Custom Properties-->
+    <PropertyGroup>
+	    <Version>2.4.2</Version>
+	    <PackageReleaseNotes>Application layer and Domain layer completed.|||Documentation added.</PackageReleaseNotes>
+	    <LastUpdated>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</LastUpdated>
+	    <Authors>Farhad Sadeghi</Authors>
+	    <Company>Crouse</Company>
+	    <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.41.3" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
+    <Using Include="MediatR" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sayantin.ReportService.Application\Sayantin.ReportService.Application.csproj" />
+    <ProjectReference Include="..\Sayantin.ReportService.Infrastructure\Sayantin.ReportService.Infrastructure.csproj" />
+  </ItemGroup>
+
+	<!--Custom Items-->
+	<ItemGroup>
+		<AssemblyMetadata Include="LastUpdated" Value="$(LastUpdated)" />
+		<AssemblyMetadata Include="Authors" Value="$(Authors)" />
+		<AssemblyMetadata Include="AuthenticationType" Value="Bearer" />
+		<EmbeddedResource Include="$(MSBuildProjectFullPath)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Docs\ChangeLog.md">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Docs\README.md">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="logs\" />
+	</ItemGroup>
+
+	<Target Name="UpdateChangeLog" BeforeTargets="PrepareForPublish">
+		<Exec Command="powershell.exe -ExecutionPolicy Bypass -File &quot;$(ProjectDir)CI\UpdateChangeLog.ps1&quot; -NewVersion &quot;$(Version)&quot; -ChangeDetails &quot;$(PackageReleaseNotes)&quot;" />
+	</Target>
+	
+</Project>
