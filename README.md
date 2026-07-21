@@ -783,7 +783,11 @@ Build
 
 Test
 
-Docker Publishبا توجه به تمام صحبت‌هایی که داشتیم (معماری میکروسرویس، حذف Contracts، استفاده از Controller، Clean Architecture، .NET 10، Power BI، Identity Service جداگانه)، اگر جای من بود، ساختار پروژه را به این صورت طراحی می‌کردم.
+Docker Publish
+
+* * * * *
+
+با توجه به تمام صحبت‌هایی که داشتیم (معماری میکروسرویس، حذف Contracts، استفاده از Controller، Clean Architecture، .NET 10، Power BI، Identity Service جداگانه)، اگر جای من بود، ساختار پروژه را به این صورت طراحی می‌کردم.
 
 این ساختار را طوری چیده‌ام که تا چند سال آینده هم قابل توسعه باشد.
 
